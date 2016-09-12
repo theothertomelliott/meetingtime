@@ -142,6 +142,12 @@ func TestPreviousSchedule(t *testing.T) {
 			inTime:      time.Date(2015, time.January, 1, 0, 0, 0, 0, time.UTC),
 			expectedErr: ErrNoEarlierMeetings,
 		},
+		{
+			name:        "No earlier, same date",
+			schedule:    Schedule{Type: Daily, First: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC), Frequency: 1},
+			inTime:      time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC),
+			expectedErr: ErrNoEarlierMeetings,
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

@@ -38,7 +38,7 @@ func TestNextScheduleSlice(t *testing.T) {
 			expectedTime: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC),
 		},
 		{
-			name: "1 week",
+			name: "1 week, 1 month and monthly by weekday",
 			schedules: ScheduleSlice{
 				Schedule{Type: Weekly, First: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC), Frequency: 1},
 				NewMonthlySchedule(time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC), 1),

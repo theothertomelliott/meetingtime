@@ -74,7 +74,7 @@ Previous returns the time of the closest meeting before the given time.
 If the given time is before the first meeting, ErrNoEarlierMeetings will be returned.
 */
 func (s Schedule) Previous(t time.Time) (time.Time, error) {
-	if t.Before(s.First) {
+	if t.Before(s.First) || t.Equal(s.First) {
 		return time.Time{}, ErrNoEarlierMeetings
 	}
 	var err error
