@@ -2,7 +2,7 @@ package meetingtime
 
 import "time"
 
-// ScheduleSlice provides functions on slices of Schedules
+// ScheduleSlice allows Schedule instances to be grouped to create more complex schedules.
 type ScheduleSlice []Schedule
 
 /*
