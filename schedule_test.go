@@ -26,6 +26,12 @@ func TestNextSchedule(t *testing.T) {
 			expectedTime: time.Date(2016, time.January, 3, 0, 0, 0, 0, time.UTC),
 		},
 		{
+			name:         "1 day - before first meeting",
+			schedule:     Schedule{Type: Daily, First: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC), Frequency: 1},
+			inTime:       time.Date(2015, time.January, 1, 0, 0, 0, 0, time.UTC),
+			expectedTime: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC),
+		},
+		{
 			name:         "1 week",
 			schedule:     Schedule{Type: Weekly, First: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC), Frequency: 1},
 			inTime:       time.Date(2016, time.January, 2, 0, 0, 0, 0, time.UTC),
@@ -42,6 +48,18 @@ func TestNextSchedule(t *testing.T) {
 			schedule:     NewMonthlyScheduleByWeekday(time.Date(2015, time.November, 11, 0, 0, 0, 0, time.UTC)),
 			inTime:       time.Date(2016, time.September, 10, 0, 0, 0, 0, time.UTC),
 			expectedTime: time.Date(2016, time.September, 14, 0, 0, 0, 0, time.UTC),
+		},
+		{
+			name:         "2nd Wednesday - 5 minutes prior",
+			schedule:     NewMonthlyScheduleByWeekday(time.Date(2015, time.November, 11, 18, 30, 0, 0, time.UTC)),
+			inTime:       time.Date(2016, time.September, 14, 18, 25, 0, 0, time.UTC),
+			expectedTime: time.Date(2016, time.September, 14, 18, 30, 0, 0, time.UTC),
+		},
+		{
+			name:         "2nd Wednesday - 5 minutes after",
+			schedule:     NewMonthlyScheduleByWeekday(time.Date(2015, time.November, 11, 18, 30, 0, 0, time.UTC)),
+			inTime:       time.Date(2016, time.September, 14, 18, 35, 0, 0, time.UTC),
+			expectedTime: time.Date(2016, time.October, 12, 18, 30, 0, 0, time.UTC),
 		},
 		{
 			name:         "1 year",
@@ -118,11 +136,17 @@ func TestPreviousSchedule(t *testing.T) {
 			inTime:       time.Date(2018, time.January, 20, 0, 0, 0, 0, time.UTC),
 			expectedTime: time.Date(2018, time.January, 1, 0, 0, 0, 0, time.UTC),
 		},
+		{
+			name:        "No earlier meeting",
+			schedule:    Schedule{Type: Daily, First: time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC), Frequency: 1},
+			inTime:      time.Date(2015, time.January, 1, 0, 0, 0, 0, time.UTC),
+			expectedErr: ErrNoEarlierMeetings,
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			outTime, outErr := test.schedule.Previous(test.inTime)
-			if outErr != nil {
+			if outErr != test.expectedErr {
 				t.Errorf("error: %v", outErr.Error())
 			} else if test.expectedTime != outTime {
 				t.Errorf("times: expected '%v' got '%v'", test.expectedTime, outTime)

@@ -9,7 +9,7 @@ import (
 type Schedule struct {
 	Type      ScheduleType // Type of recurrence
 	First     time.Time    // Time and date of first meeting
-	Frequency uint         // How frequent the meeting is. For a daily meeting, 2 would mean every other day.
+	Frequency uint         // How frequently this meeting occurs. For a daily meeting, 2 would mean every other day.
 }
 
 // ScheduleType specifies the way in which this schedule recurs
@@ -55,9 +55,6 @@ func NewYearlySchedule(first time.Time, n uint) Schedule {
 
 /*
 Next returns the time of the next meeting after the given time.
-
-For daily and yearly schedules, assumes that the given time is the date of the current meeting.
-For monthly schedules, the closest valid date after the provided one will be returned.
 */
 func (s Schedule) Next(t time.Time) (time.Time, error) {
 	var err error
@@ -72,12 +69,14 @@ func (s Schedule) Next(t time.Time) (time.Time, error) {
 }
 
 /*
-Previous returns the time of the meeting before the given time.
+Previous returns the time of the closest meeting before the given time.
 
-For daily and yearly schedules, assumes that the given time is the date of the current meeting.
-For monthly schedules, the closest valid date before the provided one will be returned.
+If the given time is before the first meeting, ErrNoEarlierMeetings will be returned.
 */
 func (s Schedule) Previous(t time.Time) (time.Time, error) {
+	if t.Before(s.First) {
+		return time.Time{}, ErrNoEarlierMeetings
+	}
 	var err error
 	c := s.First
 	prev := s.First
