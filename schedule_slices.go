@@ -1,6 +1,9 @@
 package meetingtime
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 // ScheduleSlice allows Schedule instances to be grouped to create more complex schedules.
 type ScheduleSlice []Schedule
@@ -9,6 +12,9 @@ type ScheduleSlice []Schedule
 Next returns the earliest next meeting from all Schedules in the slice.
 */
 func (schedules ScheduleSlice) Next(t time.Time) (time.Time, error) {
+	if len(schedules) == 0 {
+		return time.Time{}, errors.New("no schedules")
+	}
 	var next *time.Time
 	for _, s := range schedules {
 		sn, err := s.Next(t)
