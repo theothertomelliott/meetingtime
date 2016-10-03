@@ -8,6 +8,7 @@ import (
 	"github.com/theothertomelliott/meetingtime"
 )
 
+// Schedule generates an English description of an instance of meetingtime.Schedule
 func Schedule(schedule meetingtime.Schedule) (string, error) {
 	switch schedule.Type {
 	case meetingtime.Daily:
