@@ -102,12 +102,12 @@ func (s *Schedule) increment(t time.Time) (time.Time, error) {
 	}
 	if s.Type == MonthlyByWeekday {
 		// Identify the weekday and index
-		weekday, n := getWeekdayAndIndex(s.First)
+		weekday, n := GetWeekdayAndIndex(s.First)
 		c := t.AddDate(0, 0, 1)
-		w, cn := getWeekdayAndIndex(c)
+		w, cn := GetWeekdayAndIndex(c)
 		for w != weekday || n != cn {
 			c = c.AddDate(0, 0, 1)
-			w, cn = getWeekdayAndIndex(c)
+			w, cn = GetWeekdayAndIndex(c)
 		}
 		return c, nil
 	}
@@ -117,7 +117,10 @@ func (s *Schedule) increment(t time.Time) (time.Time, error) {
 	return time.Time{}, errors.New("not implemented")
 }
 
-func getWeekdayAndIndex(t time.Time) (weekday time.Weekday, n int) {
+// GetWeekdayAndIndex returns the Weekday of a given time, along with the count of that particular
+// day in the month. For example: a time on October 12th 2016, would return Wednesday and 2, since
+// that date is the second Wednesday in the month.
+func GetWeekdayAndIndex(t time.Time) (weekday time.Weekday, n int) {
 	// Identify the weekday and index
 	weekday = t.Weekday()
 	n = 0

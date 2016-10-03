@@ -195,7 +195,7 @@ func TestGetWeekdayAndN(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			weekday, n := getWeekdayAndIndex(test.time)
+			weekday, n := GetWeekdayAndIndex(test.time)
 			if weekday != test.expectedWeekday {
 				t.Errorf("Weekday: expected %v, got %v", test.expectedWeekday, weekday)
 			}
