@@ -61,4 +61,4 @@ Contributions are always more than welcome, feel free to pick up an issue and/or
 
 # License
 
-meetingtime is provided under the [MIT License](https://github.com/theothertomelliott/meetingtime/blob/master/LICENSE).
+`meetingtime` is provided under the [MIT License](https://github.com/theothertomelliott/meetingtime/blob/master/LICENSE).
