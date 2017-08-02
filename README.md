@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/theothertomelliott/meetingtime.svg?branch=master)](https://travis-ci.org/theothertomelliott/meetingtime)
 [![GoDoc](https://godoc.org/github.com/theothertomelliott/meetingtime?status.svg)](https://godoc.org/github.com/theothertomelliott/meetingtime)
 [![Go Report Card](https://goreportcard.com/badge/github.com/theothertomelliott/meetingtime)](https://goreportcard.com/report/github.com/theothertomelliott/meetingtime)
+[![Coverage Status](https://coveralls.io/repos/github/theothertomelliott/meetingtime/badge.svg?branch=master)](https://coveralls.io/github/theothertomelliott/meetingtime?branch=master)
 
 Package `meetingtime` provides tools for calculating dates and times for regularly occurring meetings.
 
