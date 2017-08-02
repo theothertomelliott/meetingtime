@@ -5,6 +5,6 @@ test:
 	go test -cover -race ./...
 else
 test:
-	go test -v -covermode=count -coverprofile=coverage.out
-	goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $(COVERALLS_TOKEN)
+	./cover_packages.sh
+	goveralls -coverprofile=profile.cov -service=travis-ci -repotoken $(COVERALLS_TOKEN)
 endif
